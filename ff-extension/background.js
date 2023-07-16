@@ -1,3 +1,5 @@
+const { getEndpoint, getKey } = require('./config.js')
+
 function sendURL(details) {
     const freshLoad = !!details?.freshLoad;
 
@@ -9,10 +11,11 @@ function sendURL(details) {
     sending.then((tabs) => {
         const tab = tabs[0];
 
-        fetch('http://localhost:3000/send-url', {
+        fetch(getEndpoint(), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'key': getKey(),
             },
             body: JSON.stringify({ url: tab.url, title: tab.title, freshLoad: freshLoad, tabId: tab.id, favIconUrl: tab.favIconUrl }),
         });
