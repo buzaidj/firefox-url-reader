@@ -100,7 +100,8 @@ function getActiveAndRecentPagesForClient() {
 
 // Sorta assumes we'll hit N before reaching records old enough
 function moveInactiveStuffToHistory() {
-    console.log(urlStack.map(x => x.url), historyList.map(x => x.url), topOfStackAndTimes);
+    if (global.verboseMode)
+        console.log('state of active pool', urlStack.map(x => x.url), historyList.map(x => x.url), topOfStackAndTimes);
     const twentyMinsAgo = new Date(Date.now() - msTillMoveToHistory);
     const { recent, old } = urlStack.reduce((acc, item, idx) => {
         if (item.activeTime >= twentyMinsAgo) {

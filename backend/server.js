@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
+const args = process.argv.slice(2);
+const verboseFlagIndex = args.indexOf('--verbose');
+const verboseMode = verboseFlagIndex !== -1;
+
+global.verboseMode = verboseMode;
+
 const { onRequest, getActiveAndRecentPagesForClient, moveInactiveStuffToHistory } = require('./active_url_pool.js');
 const { isUrlInWhiteList, sanitizeUrl } = require('./url_whitelist_and_sanitize.js');
 
@@ -9,8 +15,9 @@ app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 
 app.post('/send-url', (req, res) => {
-    console.log(req.body.url, req.body.title);
+    if (global.verboseMode) console.log(req.body.url, req.body.title);
     if (!isUrlInWhiteList(req.body.url)) {
+        if (global.verboseMode) console.log('return early, url not whitelist');
         res.sendStatus(200);
         return;
     }
@@ -33,7 +40,8 @@ app.get('/browsing', (req, res) => {
     const liveTab = isLive && urlHistory[0];
     const recentBrowsing = (isLive ? urlHistory.slice(1) : urlHistory).slice(0, 50);
 
-    console.log('request!!!');
+    if (global.verboseMode)
+        console.log('request!', isLive, liveTab.url, recentBrowsing.map(x => x.url));
 
     res.json({ isLive, liveTab, recentBrowsing })
 })
