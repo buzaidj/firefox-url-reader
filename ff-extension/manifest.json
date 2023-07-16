@@ -1,0 +1,28 @@
+{
+    "manifest_version": 2,
+    "name": "Send URL",
+    "version": "1.0",
+    "description": "Send the current URL to a specified endpoint.",
+    "permissions": [
+        "activeTab",
+        "webNavigation",
+        "tabs",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}
