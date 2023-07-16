@@ -5,3 +5,4 @@
 node_modules/
 
 ff-extension/config.js
+backend/config.js

@@ -10,12 +10,22 @@ global.verboseMode = verboseMode;
 
 const { onRequest, getActiveAndRecentPagesForClient, moveInactiveStuffToHistory } = require('./active_url_pool.js');
 const { isUrlInWhiteList, sanitizeUrl } = require('./url_whitelist_and_sanitize.js');
+const { doesKeyMatch } = require('./config.js');
 
 app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 
 app.post('/send-url', (req, res) => {
     if (global.verboseMode) console.log(req.body.url, req.body.title);
+
+    const key = req.headers.key;
+    if (!doesKeyMatch(key)) {
+        console.error('keys dont match! forbidden!');
+        res.sendStatus(403);
+        return;
+    }
+
+
     if (!isUrlInWhiteList(req.body.url)) {
         if (global.verboseMode) console.log('return early, url not whitelist');
         res.sendStatus(200);

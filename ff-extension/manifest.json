@@ -8,10 +8,12 @@
         "webNavigation",
         "tabs",
         "http://*/*",
-        "https://*/*"
+        "https://*/*",
+        "storage"
     ],
     "background": {
         "scripts": [
+            "config.js",
             "background.js"
         ]
     },
