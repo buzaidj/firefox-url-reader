@@ -9,8 +9,8 @@ const verboseMode = verboseFlagIndex !== -1;
 const https = require('https');
 const fs = require('fs');
 
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/api.yourdomain.com/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/api.yourdomain.com/fullchain.pem', 'utf8');
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/api.jamesbuzaid.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/api.jamesbuzaid.com/fullchain.pem', 'utf8');
 
 const credentials = {
     key: privateKey,
