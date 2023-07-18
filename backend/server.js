@@ -19,7 +19,7 @@ const credentials = {
 };
 
 const corsOptions = {
-    origin: 'https://www.jamesbuzaid.com',
+    origin: 'https://jamesbuzaid.com',
     optionsSuccessStatus: 200
 }
 
