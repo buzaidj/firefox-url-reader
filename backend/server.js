@@ -6,6 +6,22 @@ const args = process.argv.slice(2);
 const verboseFlagIndex = args.indexOf('--verbose');
 const verboseMode = verboseFlagIndex !== -1;
 
+const https = require('https');
+const fs = require('fs');
+
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/api.yourdomain.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/api.yourdomain.com/fullchain.pem', 'utf8');
+
+const credentials = {
+    key: privateKey,
+    cert: certificate
+};
+
+const corsOptions = {
+    origin: 'https://www.jamesbuzaid.com',
+    optionsSuccessStatus: 200
+}
+
 global.verboseMode = verboseMode;
 
 const { onRequest, getActiveAndRecentPagesForClient, moveInactiveStuffToHistory } = require('./active_url_pool.js');
@@ -13,7 +29,7 @@ const { isUrlInWhiteList, sanitizeUrl } = require('./url_whitelist_and_sanitize.
 const { doesKeyMatch } = require('./config.js');
 
 app.use(express.json({ limit: '10mb' }));
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.post('/send-url', (req, res) => {
     if (global.verboseMode) console.log(req.body.url, req.body.title);
@@ -56,8 +72,8 @@ app.get('/browsing', (req, res) => {
     res.json({ isLive, liveTab, recentBrowsing })
 })
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+https.createServer(credentials, app).listen(443, () => {
+    console.log('HTTPS Server running on port 443');
 });
 
 // The idea here is that eventually history will be moved to disk
