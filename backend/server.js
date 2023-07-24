@@ -18,7 +18,10 @@ const credentials = {
     cert: certificate
 };
 
-const corsOptions = {
+const debugFlagIndex = args.indexOf('--debug');
+const isDebug = debugFlagIndex !== -1;
+
+const corsOptions = isDebug ? { origin: true } : {
     origin: 'https://jamesbuzaid.com',
     optionsSuccessStatus: 200
 }
