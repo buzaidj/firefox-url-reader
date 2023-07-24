@@ -1,5 +1,6 @@
 // Should we be locking critical sections?
-// const fs = require('fs');
+const fs = require('fs');
+const history_filename = 'saved_history.jsonl'
 
 let urlStack = []; // stack of {url, tabId, addTime, activeTime, info}
 let N = 50; // number of times at top to stop considering a tab active, this is about 5 minutes considering browser sends a request every 6 secs
@@ -119,6 +120,33 @@ function moveInactiveStuffToHistory() {
 
     urlStack = recent
     historyList = historyList.concat(old);
+
+    fs.appendFile(history_filename, old.map(item => JSON.stringify(item)).join('\n') + '\n', () => {
+        if (global.verboseMode) console.log('wrote new history to file');
+    })
+}
+
+process.on('SIGINT', () => {
+    console.log('\nCaught interrupt signal. Writing pool to history file...');
+
+    const contentsToWrite = urlStack.map(item => JSON.stringify(item)).join('\n');
+    try {
+        fs.appendFileSync(history_filename, contentsToWrite + '\n');
+        console.log('Wrote data to file');
+    } catch (err) {
+        console.error('Error writing to file:', err);
+    }
+
+    process.exit(0);
+})
+
+function initializeFromFile() {
+    const contents = fs.readFileSync(history_filename);
+    const lines = contents.split('\n');
+    if (lines[lines.length - 1] === '') {
+        lines.pop();
+    }
+    urlStack = lines.map(line => JSON.parse(line));
 }
 
 
@@ -126,4 +154,5 @@ module.exports = {
     onRequest,
     getActiveAndRecentPagesForClient,
     moveInactiveStuffToHistory,
+    initializeFromFile
 }

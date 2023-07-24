@@ -28,7 +28,7 @@ const corsOptions = isDebug ? { origin: true } : {
 
 global.verboseMode = verboseMode;
 
-const { onRequest, getActiveAndRecentPagesForClient, moveInactiveStuffToHistory } = require('./active_url_pool.js');
+const { onRequest, getActiveAndRecentPagesForClient, moveInactiveStuffToHistory, initializeFromFile } = require('./active_url_pool.js');
 const { isUrlInWhiteList, sanitizeUrl } = require('./url_whitelist_and_sanitize.js');
 const { doesKeyMatch } = require('./config.js');
 
@@ -89,6 +89,7 @@ app.get('/browsing', (req, res) => {
 
 https.createServer(credentials, app).listen(443, () => {
     console.log('HTTPS Server running on port 443');
+    initializeFromFile();
 });
 
 // The idea here is that eventually history will be moved to disk
