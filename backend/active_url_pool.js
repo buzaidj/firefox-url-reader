@@ -1,5 +1,5 @@
 // Should we be locking critical sections?
-const fs = require('fs');
+// const fs = require('fs');
 
 let urlStack = []; // stack of {url, tabId, addTime, activeTime, info}
 let N = 50; // number of times at top to stop considering a tab active, this is about 5 minutes considering browser sends a request every 6 secs

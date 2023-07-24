@@ -1,7 +1,7 @@
 const WHITELISTED_DOMAINS = [
     'arxiv.org/pdf',
     'chat.openai.com',
-    'google.com/search', // no gmail
+    // 'google.com/search', // no gmail
     'scholar.google.com',
     'news.ycombinator.com',
     'github.com',
