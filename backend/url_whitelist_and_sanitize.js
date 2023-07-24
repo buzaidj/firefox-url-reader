@@ -9,8 +9,12 @@ const WHITELISTED_DOMAINS = [
     'wikipedia.org',
 ]
 
+const DENYLISTED_DOMAINS = [
+    'file:///'
+]
+
 function isUrlInWhiteList(url) {
-    return WHITELISTED_DOMAINS.some(domain => url.includes(domain));
+    return WHITELISTED_DOMAINS.some(domain => url.includes(domain)) && !DENYLISTED_DOMAINS.some(domain => url.includes(domain));
 }
 
 function sanitizeUrl(url) {
