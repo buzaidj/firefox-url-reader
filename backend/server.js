@@ -33,6 +33,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(cors(corsOptions));
 
 app.use((err, req, res, next) => {
+    console.log(err.name);
     if (err.name === 'CorsError' && global.verboseMode) {
         console.error('CORS Error:', err.message);
         console.error('Request Headers:', req.headers);
