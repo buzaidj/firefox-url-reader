@@ -2,9 +2,9 @@
 const fs = require('fs');
 
 // Create the file if it does not exist
-const fd = fs.openSync('output.jsonl', 'a');
-fs.closeSync(fd);
 const history_filename = 'saved_history.jsonl'
+const fd = fs.openSync(history_filename, 'a');
+fs.closeSync(fd);
 
 let urlStack = []; // stack of {url, tabId, addTime, activeTime, info}
 let N = 50; // number of times at top to stop considering a tab active, this is about 5 minutes considering browser sends a request every 6 secs

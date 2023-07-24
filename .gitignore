@@ -6,3 +6,4 @@ node_modules/
 
 ff-extension/config.js
 backend/config.js
+backend/saved_history.jsonl
