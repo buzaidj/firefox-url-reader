@@ -102,9 +102,10 @@ function getActiveAndRecentPagesForClient() {
     let uniqueUrls = urlHistory.filter((item, index, self) =>
         index === self.findIndex((t) => (t.url === item.url))
     );
+
     return {
         isLive,
-        uniqueUrls,
+        urlHistory: uniqueUrls,
     }
 }
 
