@@ -9,7 +9,9 @@ fs.closeSync(fd);
 let urlStack = []; // stack of {url, tabId, addTime, activeTime, info}
 let N = 50; // number of times at top to stop considering a tab active, this is about 5 minutes considering browser sends a request every 6 secs
 let historyList = []; // list of {url, addTime, info}
-const msTillMoveToHistory = 20 * 60 * 1000;
+
+const MS_IN_MINUTE = 60 * 1000;
+const msTillMoveToHistory = global.isDebug ? 2 * MS_IN_MINUTE : 20 * MS_IN_MINUTE;
 
 let topOfStackAndTimes = {
     url: null,

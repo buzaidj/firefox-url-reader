@@ -27,6 +27,7 @@ const corsOptions = isDebug ? { origin: true } : {
 }
 
 global.verboseMode = verboseMode;
+global.isDebug = isDebug;
 
 const { onRequest, getActiveAndRecentPagesForClient, moveInactiveStuffToHistory, initializeFromFile } = require('./active_url_pool.js');
 const { isUrlInWhiteList, sanitizeUrl } = require('./url_whitelist_and_sanitize.js');
