@@ -30,8 +30,6 @@ const { isUrlInWhiteList, sanitizeUrl } = require('./url_whitelist_and_sanitize.
 const { doesKeyMatch } = require('./config.js');
 
 app.use(express.json({ limit: '10mb' }));
-app.use(cors(corsOptions));
-
 app.use((err, req, res, next) => {
     console.log(err.name);
     if (err.name === 'CorsError' && global.verboseMode) {
@@ -42,6 +40,8 @@ app.use((err, req, res, next) => {
 
     next(err);
 });
+app.use(cors(corsOptions));
+
 
 app.post('/send-url', (req, res) => {
     if (global.verboseMode) console.log(req.body.url, req.body.title);
