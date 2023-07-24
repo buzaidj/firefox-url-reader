@@ -145,7 +145,7 @@ process.on('SIGINT', () => {
 })
 
 function initializeFromFile() {
-    const contents = fs.readFileSync(history_filename);
+    const contents = fs.readFileSync(history_filename, 'utf-8');
     console.log(contents);
     const lines = contents.split('\n');
     if (lines[lines.length - 1] === '') {
