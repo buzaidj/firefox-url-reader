@@ -146,6 +146,7 @@ process.on('SIGINT', () => {
 
 function initializeFromFile() {
     const contents = fs.readFileSync(history_filename);
+    console.log(contents);
     const lines = contents.split('\n');
     if (lines[lines.length - 1] === '') {
         lines.pop();
