@@ -125,9 +125,11 @@ function moveInactiveStuffToHistory() {
     urlStack = recent
     historyList = historyList.concat(old);
 
-    fs.appendFile(history_filename, old.map(item => JSON.stringify(item)).join('\n') + '\n', () => {
-        if (global.verboseMode) console.log('wrote new history to file');
-    })
+    if (old.length >= 1) {
+        fs.appendFile(history_filename, old.map(item => JSON.stringify(item)).join('\n') + '\n', () => {
+            if (global.verboseMode) console.log('wrote new history to file');
+        })
+    }
 }
 
 process.on('SIGINT', () => {
