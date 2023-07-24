@@ -1,5 +1,9 @@
 // Should we be locking critical sections?
 const fs = require('fs');
+
+// Create the file if it does not exist
+const fd = fs.openSync('output.jsonl', 'a');
+fs.closeSync(fd);
 const history_filename = 'saved_history.jsonl'
 
 let urlStack = []; // stack of {url, tabId, addTime, activeTime, info}
