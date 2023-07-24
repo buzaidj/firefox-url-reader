@@ -96,13 +96,15 @@ function onRequest({ tabId, url, freshLoad, tabInfo, reqTime }) {
 function getActiveAndRecentPagesForClient() {
     const isLive = urlStack.length > 0;
 
-    // Eventually history will be moved to disk and this will be broken down
-    // into two parts
+    // Bottom of the stack / history list is the most recent
     const urlHistory = [...urlStack].reverse().concat([...historyList].reverse());
 
+    let uniqueUrls = urlHistory.filter((item, index, self) =>
+        index === self.findIndex((t) => (t.url === item.url))
+    );
     return {
         isLive,
-        urlHistory,
+        uniqueUrls,
     }
 }
 
